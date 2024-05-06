@@ -25,18 +25,11 @@ export class UserService {
     return this._http.post<User>(`${environment.API_URL}users`, userData)
   }
 
-  // create(userData: User): Promise<User> {
-  //   return new Promise((resolve, reject) => {
-  //     this._http.post(`${environment.API_URL}users`, userData)
-  //       .subscribe((rsl) => resolve(rsl), (err) => reject(err));
-  //   });
-  // }
-
   update(user_id: number, userData: User): Observable<User> {
     return this._http.put<User>(`${environment.API_URL}users/${user_id}`, userData);
   }
 
-  // removeUser(user_id: number): Observable<User> {
-  //   return this._http.delete<User>(`${environment.API_URL}users/${user_id}`);
-  // }
+  remove(user_id: number): Observable<User> {
+    return this._http.delete<User>(`${environment.API_URL}users/${user_id}`);
+  }
 }

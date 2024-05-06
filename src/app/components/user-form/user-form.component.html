@@ -1,6 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title size="large"><strong>{{user.id ? 'Editar': 'Cadastrar'}}</strong> Usuário</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()" fill="clear" color="primary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

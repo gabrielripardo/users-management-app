@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Profile } from 'src/app/models/profile-model';
 import { User } from 'src/app/models/user-model';
@@ -23,6 +23,7 @@ export class UserFormComponent  implements OnInit {
     private formBuilder: FormBuilder,
     private _alertCtrl: AlertController,
     private _loadingCtrl: LoadingController,
+    private _modal: ModalController,
   ) { }
 
   ngOnInit() {
@@ -80,7 +81,7 @@ export class UserFormComponent  implements OnInit {
 
           await alert.present();
 
-          alert.onWillDismiss().then(() => window.location.reload);
+          alert.onWillDismiss().then(() => this.close());
           loader.dismiss()
         },
         error: async (e) => {
@@ -120,7 +121,7 @@ export class UserFormComponent  implements OnInit {
 
           await alert.present();
 
-          alert.onWillDismiss().then(() => window.location.reload);
+          alert.onWillDismiss().then(() => this.close());
           loader.dismiss()
         },
         error: async () => {
@@ -135,6 +136,9 @@ export class UserFormComponent  implements OnInit {
         }
       }
     )
+  }
+  public close() {
+    this._modal.dismiss();
   }
 
 }
