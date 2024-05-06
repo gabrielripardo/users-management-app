@@ -18,7 +18,7 @@
       <ion-avatar aria-hidden="true" slot="start">
         <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
       </ion-avatar>
-      <ion-label>{{user.name}} - <strong>{{user.profile_id}}</strong></ion-label>
+      <ion-label>{{user.name}} <span *ngIf="user.profile?.name == 'Admin User'">-<strong> {{user.profile?.name}} </strong></span></ion-label>
       <div class="actions">
         <img class="action-item" alt="edit-user" src="../../assets/icon/edit-icon.svg" />
         <img class="action-item" alt="remove-user" src="../../assets/icon/trash-icon.svg" />
@@ -26,7 +26,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-fab>
+  <ion-fab class="form-button">
     <ion-fab-button href="/user-form">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
