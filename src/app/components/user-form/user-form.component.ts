@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Profile } from 'src/app/models/profile-model';
@@ -38,7 +38,17 @@ export class UserFormComponent  implements OnInit {
       password: [null, [Validators.required, Validators.minLength(8)]],
       password_confirmation: [null, [Validators.required]],
       profile_id: [this.user.profile_id, [Validators.required]]
-    },);
+    },
+    {
+      validators: this.passwordMatchValidator
+    });
+  }
+
+  passwordMatchValidator(control: AbstractControl){
+    return control.get('password')?.value ===
+      control.get('password_confirmation')?.value
+      ? null
+      : {mismatch: true};
   }
 
   submitForm() {
@@ -140,5 +150,4 @@ export class UserFormComponent  implements OnInit {
   public close() {
     this._modal.dismiss();
   }
-
 }

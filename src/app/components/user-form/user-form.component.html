@@ -38,6 +38,9 @@
             <ion-input-password-toggle slot="end"></ion-input-password-toggle>
           </ion-input>
         </ion-item>
+        <span class="password-mismatch" *ngIf="formUser?.errors?.['mismatch'] && formUser?.touched">
+          Senhas não correspondem
+        </span>
         <ion-item>
           <ion-select label="Perfil *" formControlName="profile_id" label-placement="floating" required>
             <ion-select-option *ngFor="let p of (profiles$ | async)" [value]="p.id">{{p.name}}</ion-select-option>
