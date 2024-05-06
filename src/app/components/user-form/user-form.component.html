@@ -9,12 +9,12 @@
     <form [formGroup]="formUser" (ngSubmit)="submitForm()">
       <ion-list>
         <ion-item>
-          <ion-input labelPlacement="floating" formControlName="name" value="" placeholder="Ex.: João" required>
+          <ion-input labelPlacement="floating" formControlName="name" placeholder="Ex.: João" required>
             <div slot="label">Nome <ion-text color="danger">*</ion-text></div>
           </ion-input>
         </ion-item>
         <ion-item>
-          <ion-input type="email" formControlName="email" labelPlacement="floating" value="" placeholder="username@mail.com" required>
+          <ion-input type="email" formControlName="email" labelPlacement="floating" placeholder="username@mail.com" required>
             <div slot="label">Email <ion-text color="danger">*</ion-text></div>
           </ion-input>
         </ion-item>
@@ -24,12 +24,12 @@
           </ion-input>
         </ion-item>
         <ion-item>
-          <ion-input type="password" formControlName="password" labelPlacement="floating" label="Senha" value="NeverGonnaGiveYouUp">
+          <ion-input type="password" formControlName="password" labelPlacement="floating" label="Senha" value="NeverGonnaGiveYouUp" required>
             <ion-input-password-toggle slot="end"></ion-input-password-toggle>
           </ion-input>
         </ion-item>
         <ion-item>
-          <ion-input type="password" formControlName="password_confirmation" labelPlacement="floating" label="Confirma Senha" value="NeverGonnaGiveYouUp">
+          <ion-input type="password" formControlName="password_confirmation" labelPlacement="floating" label="Confirma Senha" value="NeverGonnaGiveYouUp" required="">
             <ion-input-password-toggle slot="end"></ion-input-password-toggle>
           </ion-input>
         </ion-item>

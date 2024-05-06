@@ -9,10 +9,10 @@ import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-user-form',
-  templateUrl: './user-form.page.html',
-  styleUrls: ['./user-form.page.scss'],
+  templateUrl: './user-form.component.html',
+  styleUrls: ['./user-form.component.scss'],
 })
-export class UserFormPage implements OnInit {
+export class UserFormComponent  implements OnInit {
   @Input() user: User = new Object as User;
   public profiles$: Observable<Profile[]> = this._profileService.getAll()
   formUser!: FormGroup
@@ -23,7 +23,6 @@ export class UserFormPage implements OnInit {
     private formBuilder: FormBuilder,
     private _alertCtrl: AlertController,
     private _loadingCtrl: LoadingController,
-    private _navCtrl: NavController,
   ) { }
 
   ngOnInit() {
@@ -32,12 +31,12 @@ export class UserFormPage implements OnInit {
 
   private buildForm() {
     this.formUser = this.formBuilder.group({
-      name: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.email]],
-      phone: [null, [Validators.pattern('[0-9]{10}')]],
+      name: [this.user.name, [Validators.required]],
+      email: [this.user.email, [Validators.required, Validators.email]],
+      phone: [this.user.phone, [Validators.pattern('[0-9]{10}')]],
       password: [null, [Validators.required, Validators.minLength(8)]],
       password_confirmation: [null, [Validators.required]],
-      profile_id: [null, [Validators.required]]
+      profile_id: [this.user.profile_id, [Validators.required]]
     },);
   }
 
@@ -81,7 +80,7 @@ export class UserFormPage implements OnInit {
 
           await alert.present();
 
-          alert.onWillDismiss().then(() => this._navCtrl.back());
+          alert.onWillDismiss().then(() => window.location.reload);
           loader.dismiss()
         },
         error: async (e) => {
@@ -102,26 +101,40 @@ export class UserFormPage implements OnInit {
 
 
   private async update(user: User) {
-    // const loader = await this._alertService.loader('Salvando usuário...');
-    // await loader.present();
+    const titleAlert = "Editar Usuário"
+    const loader = await this._loadingCtrl.create({
+      message: "Salvando usuário",
+      spinner: "crescent",
+    });
+    await loader.present();
 
-    // this._userService.create(user)
-    //   .then(async (u: User) => {
-    //     this._userStore.users = [f, ...this._userStore.users];
-    //     console.log('# this._userStore.users ', this._userStore.users);
+    console.log('# user ', user);
+    this._userService.update(user.id, user).subscribe(
+      {
+        next: async () => {
+          const alert = await this._alertCtrl.create({
+            header: titleAlert,
+            message: 'Usuário salvo com sucesso',
+            buttons: ['Ok'],
+          });
 
-    //     const msg = 'Cadastro de Usuário';
-    //     const msgTwo = 'Usuário salvo com sucesso';
-    //     const alert = await this._alertService.alert(msg, msgTwo);
-    //     alert.onWillDismiss().then(() => this._navCtrl.back());
-    //     await alert.present();
-    //   })
-    //   .catch(async (err) => {
-    //     const msg = 'Cadastro de Usuário';
-    //     const errorMsg = 'Erro ao salvar usuário;
-    //     const alert = await this._alertService.alert(msg, errorMsg);
-    //     await alert.present();
-    //   })
-    //   .finally(() => loader.dismiss());
+          await alert.present();
+
+          alert.onWillDismiss().then(() => window.location.reload);
+          loader.dismiss()
+        },
+        error: async () => {
+          const alert = await this._alertCtrl.create({
+            header: titleAlert,
+            message: 'Erro ao Salvar usuário',
+            buttons: ['Ok'],
+          });
+
+          await alert.present();
+          loader.dismiss()
+        }
+      }
+    )
   }
+
 }

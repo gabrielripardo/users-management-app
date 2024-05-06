@@ -32,9 +32,9 @@ export class UserService {
   //   });
   // }
 
-  // update(user_id: number, userData: User): Observable<User> {
-  //   return this._http.put<User>(`${environment.API_URL}users/${user_id}`, userData);
-  // }
+  update(user_id: number, userData: User): Observable<User> {
+    return this._http.put<User>(`${environment.API_URL}users/${user_id}`, userData);
+  }
 
   // removeUser(user_id: number): Observable<User> {
   //   return this._http.delete<User>(`${environment.API_URL}users/${user_id}`);

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { UserService } from '../services/user/user.service';
 import { User } from '../models/user-model';
+import { ModalController } from '@ionic/angular';
+import { UserFormComponent } from '../components/user-form/user-form.component';
 
 @Component({
   selector: 'app-tab1',
@@ -10,9 +12,9 @@ import { User } from '../models/user-model';
 export class Tab1Page {
   users: User[] = [];
 
-
   constructor(
     public _userService: UserService,
+    private _modal: ModalController,
   ) {}
 
   ngOnInit(){
@@ -23,4 +25,20 @@ export class Tab1Page {
     })
   }
 
+  async openForm(user: User = new Object as User){
+    console.log('# user ', user);
+    const modal = await this._modal.create({
+      component: UserFormComponent,
+      componentProps: {
+        user
+      }
+    });
+
+    modal.onWillDismiss()
+      .then((user: any) => {
+          console.log('# modal.onWillDismiss ', user);
+      });
+
+    await modal.present();
+  }
 }

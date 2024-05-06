@@ -20,14 +20,18 @@
       </ion-avatar>
       <ion-label>{{user.name}} <span *ngIf="user.profile?.name == 'Admin User'">-<strong> {{user.profile?.name}} </strong></span></ion-label>
       <div class="actions">
-        <img class="action-item" alt="edit-user" src="../../assets/icon/edit-icon.svg" />
-        <img class="action-item" alt="remove-user" src="../../assets/icon/trash-icon.svg" />
+        <ion-button color="light" (click)="openForm(user)">
+          <img class="action-item" alt="edit-user" src="../../assets/icon/edit-icon.svg" />
+        </ion-button>
+        <ion-button color="light">
+          <img class="action-item" alt="remove-user" src="../../assets/icon/trash-icon.svg" />
+        </ion-button>
       </div>
     </ion-item>
   </ion-list>
 
-  <ion-fab class="form-button">
-    <ion-fab-button href="/user-form">
+  <ion-fab class="form-button" (click)="openForm()">
+    <ion-fab-button>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
